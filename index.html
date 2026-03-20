@@ -1,0 +1,873 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Neural Pathways of Literacy, Learning &amp; Trauma — Interactive Diagram</title>
+<meta name="description" content="Evidence-based interactive sagittal brain diagram showing overlapping neural pathways of the reading brain, learning brain, and trauma brain. For trauma-informed literacy intervention education.">
+<meta name="author" content="Rachel Terra Norton / RTN Communication &amp; Literacy">
+<meta name="keywords" content="dyslexia, PTSD, reading brain, trauma, neuroscience, literacy intervention, fMRI, ACC, VWFA, executive function">
+<link rel="license" href="https://creativecommons.org/licenses/by-nc/4.0/">
+
+<!-- Open Graph -->
+<meta property="og:title" content="Neural Pathways of Literacy, Learning & Trauma">
+<meta property="og:description" content="Interactive brain diagram for trauma-informed literacy intervention education.">
+<meta property="og:type" content="website">
+
+<!-- Fonts: Newsreader (distinctive editorial serif) + Source Code Pro (refined mono) -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,600;0,6..72,700;1,6..72,300;1,6..72,400&family=Source+Code+Pro:wght@300;400;500&display=swap" rel="stylesheet">
+
+<style>
+/* ============================================================
+   CSS CUSTOM PROPERTIES
+   ============================================================ */
+:root {
+  /* Background & surface */
+  --bg-deep:    #060A14;
+  --bg-surface: #0C1020;
+  --bg-card:    rgba(14, 18, 34, 0.96);
+  --border-dim: rgba(255, 255, 255, 0.06);
+  --border-med: rgba(255, 255, 255, 0.10);
+
+  /* Text */
+  --text-primary:   #E4E2DD;
+  --text-secondary:  #A0A8C0;
+  --text-tertiary:   #606880;
+  --text-muted:      #3A4060;
+
+  /* Pathway palette */
+  --reading:       #0077B6;
+  --reading-light: #90E0EF;
+  --learning:      #D4950A;
+  --learning-light:#FCD34D;
+  --trauma:        #C62828;
+  --trauma-light:  #FF6B6B;
+
+  /* Overlap blends */
+  --overlap-rl:  #4A8A3E;
+  --overlap-rt:  #7B3060;
+  --overlap-lt:  #B05A1A;
+  --overlap-all: #9070B0;
+
+  /* Typography */
+  --font-display: 'Newsreader', Georgia, 'Times New Roman', serif;
+  --font-mono:    'Source Code Pro', 'Menlo', monospace;
+
+  /* Transitions */
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* ============================================================
+   RESET & BASE
+   ============================================================ */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html {
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  background: var(--bg-deep);
+  color: var(--text-primary);
+  font-family: var(--font-display);
+  line-height: 1.55;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* Subtle grain texture overlay */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 9999;
+}
+
+/* ============================================================
+   LAYOUT
+   ============================================================ */
+.container {
+  max-width: 1140px;
+  margin: 0 auto;
+  padding: 20px 16px 32px;
+}
+
+.main-grid {
+  display: grid;
+  grid-template-columns: 1fr 320px;
+  gap: 16px;
+  align-items: start;
+}
+
+@media (max-width: 860px) {
+  .main-grid { grid-template-columns: 1fr; }
+}
+
+/* ============================================================
+   HEADER
+   ============================================================ */
+.header {
+  text-align: center;
+  margin-bottom: 14px;
+  opacity: 0;
+  animation: fadeUp 0.8s var(--ease-out) 0.1s forwards;
+}
+
+.header h1 {
+  font-size: clamp(1.15rem, 2.8vw, 1.7rem);
+  font-weight: 300;
+  letter-spacing: 0.02em;
+  background: linear-gradient(135deg, var(--reading-light) 0%, var(--learning-light) 50%, var(--trauma-light) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 4px;
+}
+
+.header .subtitle {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  font-weight: 300;
+  color: var(--text-muted);
+  letter-spacing: 0.04em;
+}
+
+/* ============================================================
+   CONTROLS
+   ============================================================ */
+.controls {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 14px;
+  opacity: 0;
+  animation: fadeUp 0.8s var(--ease-out) 0.25s forwards;
+}
+
+.pw-btn {
+  padding: 6px 15px;
+  border: 1.5px solid;
+  border-radius: 5px;
+  background: transparent;
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  font-weight: 400;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.25s var(--ease-out);
+  position: relative;
+}
+
+.pw-btn:hover { transform: translateY(-1px); }
+.pw-btn:focus-visible { outline: 2px solid var(--overlap-all); outline-offset: 2px; }
+
+.pw-btn[data-active="true"] { color: var(--bg-deep) !important; }
+.pw-btn[data-active="false"] { opacity: 0.45; }
+
+.clin-toggle {
+  padding: 5px 12px;
+  border: 1px solid rgba(144, 112, 176, 0.3);
+  border-radius: 5px;
+  background: rgba(144, 112, 176, 0.06);
+  color: #B898D0;
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.03em;
+  cursor: pointer;
+  transition: all 0.25s var(--ease-out);
+}
+.clin-toggle:hover { background: rgba(144, 112, 176, 0.12); }
+.clin-toggle[data-active="true"] { background: rgba(144, 112, 176, 0.18); border-color: rgba(144, 112, 176, 0.5); }
+
+/* ============================================================
+   CARD
+   ============================================================ */
+.card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-dim);
+  border-radius: 10px;
+  padding: 15px;
+  backdrop-filter: blur(12px);
+  transition: border-color 0.3s;
+}
+
+.card + .card { margin-top: 10px; }
+
+/* ============================================================
+   BADGES
+   ============================================================ */
+.badge {
+  display: inline-block;
+  padding: 2px 7px;
+  border-radius: 3px;
+  font-family: var(--font-mono);
+  font-size: 0.58rem;
+  font-weight: 500;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  margin-right: 3px;
+  margin-bottom: 3px;
+}
+
+/* ============================================================
+   SVG BRAIN
+   ============================================================ */
+.brain-wrap {
+  opacity: 0;
+  animation: fadeUp 0.8s var(--ease-out) 0.4s forwards;
+}
+
+.brain-svg { width: 100%; height: auto; }
+
+.region-node { cursor: pointer; transition: filter 0.15s; }
+.region-node:hover { filter: brightness(1.35); }
+
+/* ============================================================
+   SIDE PANEL
+   ============================================================ */
+.side-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  opacity: 0;
+  animation: fadeUp 0.8s var(--ease-out) 0.55s forwards;
+}
+
+.region-title {
+  font-size: 0.88rem;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.region-desc {
+  font-size: 0.78rem;
+  line-height: 1.6;
+  color: var(--text-secondary);
+  margin-bottom: 8px;
+}
+
+.region-evidence {
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  font-weight: 300;
+  color: var(--text-tertiary);
+  line-height: 1.5;
+}
+
+.legend-heading {
+  font-family: var(--font-mono);
+  font-size: 0.58rem;
+  font-weight: 400;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-tertiary);
+  margin-bottom: 6px;
+}
+
+.legend-row {
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 5px;
+}
+
+.legend-swatch {
+  width: 8px; height: 8px;
+  border-radius: 2px;
+  flex-shrink: 0;
+  margin-top: 4px;
+  margin-right: 7px;
+}
+
+.legend-label { font-size: 0.72rem; font-weight: 600; }
+.legend-sub { font-size: 0.66rem; color: var(--text-tertiary); }
+
+.overlap-row {
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 4px;
+}
+
+.overlap-dots {
+  display: flex;
+  margin-right: 6px;
+  margin-top: 3px;
+}
+
+.overlap-dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  margin-right: -1.5px;
+  border: 0.7px solid var(--bg-deep);
+}
+
+.overlap-label { font-size: 0.66rem; color: var(--text-secondary); }
+.overlap-sub { font-size: 0.6rem; color: var(--text-muted); display: block; }
+
+/* ============================================================
+   CLINICAL PANEL
+   ============================================================ */
+.clinical-panel {
+  border-color: rgba(144, 112, 176, 0.15) !important;
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  transition: max-height 0.5s var(--ease-out), opacity 0.4s, margin 0.4s;
+  margin-top: 0;
+  padding: 0 15px;
+}
+
+.clinical-panel[data-open="true"] {
+  max-height: 2000px;
+  opacity: 1;
+  margin-top: 10px;
+  padding: 15px;
+}
+
+.clinical-panel p {
+  font-size: 0.72rem;
+  color: var(--text-secondary);
+  line-height: 1.65;
+  margin-bottom: 8px;
+}
+
+.clinical-panel p:last-child { margin-bottom: 0; }
+
+.clinical-panel strong {
+  color: #C0A0D8;
+}
+
+.clinical-panel em {
+  font-style: italic;
+  color: var(--learning-light);
+}
+
+/* ============================================================
+   FOOTER
+   ============================================================ */
+.footer {
+  text-align: center;
+  margin-top: 24px;
+  padding-top: 14px;
+  border-top: 1px solid var(--border-dim);
+  opacity: 0;
+  animation: fadeUp 0.8s var(--ease-out) 0.7s forwards;
+}
+
+.footer p {
+  font-family: var(--font-mono);
+  font-size: 0.58rem;
+  font-weight: 300;
+  color: var(--text-muted);
+  line-height: 1.7;
+}
+
+/* ============================================================
+   ANIMATIONS
+   ============================================================ */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ============================================================
+   PRINT
+   ============================================================ */
+@media print {
+  body { background: #fff; color: #111; }
+  body::before { display: none; }
+  .controls, .clin-toggle { display: none; }
+  .card { border: 1px solid #ccc; background: #f9f9f9; }
+}
+</style>
+</head>
+
+<body>
+<div class="container" id="app"></div>
+
+<script>
+/* ================================================================
+   DATA: REGIONS
+   All descriptions and citations grounded in peer-reviewed evidence.
+   ================================================================ */
+const COLORS = {
+  reading:  '#0077B6',
+  learning: '#D4950A',
+  trauma:   '#C62828',
+};
+
+const OVERLAP = {
+  rl:  '#4A8A3E',
+  rt:  '#7B3060',
+  lt:  '#B05A1A',
+  all: '#9070B0',
+};
+
+function regionColor(pw) {
+  if (pw.length === 3) return OVERLAP.all;
+  if (pw.length === 2) {
+    const k = pw.slice().sort().join('');
+    if (k === 'learningreading') return OVERLAP.rl;
+    if (k === 'readingtrauma')  return OVERLAP.rt;
+    if (k === 'learningtrauma') return OVERLAP.lt;
+  }
+  return COLORS[pw[0]] || '#666';
+}
+
+function rgba(hex, a) {
+  const r = parseInt(hex.slice(1,3),16);
+  const g = parseInt(hex.slice(3,5),16);
+  const b = parseInt(hex.slice(5,7),16);
+  return `rgba(${r},${g},${b},${a})`;
+}
+
+const REGIONS = [
+  {
+    id:'lifg', name:'Left Inferior Frontal Gyrus (Broca\'s Area)', short:'L-IFG (Broca\'s)',
+    pw:['reading'], cx:145, cy:158, rx:28, ry:16,
+    desc:'FRONTAL READING CIRCUIT: Analyzes the sounds within words. Supports effortful phonological decoding — early reading relies heavily on this region. Hypoactivation in RD during phonological processing; decreased cortical thickness in RD and comorbid RD-ADHD. Dyslexia is fundamentally linked to oral language / phonological processing, not vision.',
+    cite:'Marks (2025): frontal circuit; Langer et al. (2019): TYP, ADHD > RD, COM; Kovelman et al. (2012); D\'Mello & Gabrieli (2018)'
+  },
+  {
+    id:'dlpfc', name:'Dorsolateral / Middle Frontal Cortex', short:'dlPFC / MFC',
+    pw:['learning','reading'], cx:128, cy:118, rx:26, ry:15,
+    desc:'Working memory, cognitive control, sustained attention. Reduced activation during Go/No-Go response inhibition in PTSD youth. Normalized activity observed after successful trauma-focused psychotherapy (EMDR/BEP), suggesting state-dependent plasticity.',
+    cite:'Carrion et al. (2008): ↓ middle frontal in PTSD Go/No-Go; Nijdam et al. (2018): dlPFC normalization post-treatment; Langer et al. (2019)'
+  },
+  {
+    id:'mpfc', name:'Medial Prefrontal Cortex / vmPFC', short:'mPFC / vmPFC',
+    pw:['trauma','learning'], cx:160, cy:78, rx:22, ry:17,
+    desc:'Top-down emotion regulation, fear extinction, autonomic inhibition. vmPFC fails to inhibit amygdala in PTSD → increased fear response and impaired extinction. Volume decrease linked to elevated bedtime cortisol in traumatized youth. Also supports metacognitive learning and self-referential processing.',
+    cite:'Carrion et al. (2010b): ↓ L ventral PFC linked to cortisol; Boccia et al. (2016): medial frontal in PTSD ALE; Richert et al. (2006)'
+  },
+  {
+    id:'acc', name:'Anterior Cingulate Cortex', short:'ACC',
+    pw:['learning','trauma','reading'], cx:192, cy:105, rx:18, ry:22,
+    desc:'CRITICAL OVERLAP ZONE — Error monitoring, conflict detection, attentional allocation, emotional conflict resolution. Reduced cortical thickness in ALL clinical groups (RD, ADHD, COM) vs. TYP: a shared neuroanatomical risk factor. Consistently hyperactivated in the PTSD ALE meta-analysis. Hypoactivated during Go/No-Go in ADHD/COM and during reading fluency in all clinical groups.',
+    cite:'Langer et al. (2019): TYP > RD, ADHD, COM — cortical thickness AND all 3 fMRI tasks; Boccia et al. (2016): ACC in PTSD ALE (BA 24); Carrion et al. (2008)'
+  },
+  {
+    id:'pcc', name:'Posterior Cingulate / Retrosplenial Cortex', short:'PCC / RSC',
+    pw:['trauma'], cx:310, cy:148, rx:18, ry:14,
+    desc:'Autobiographical memory, scene construction, hippocampus-dependent functions. Hyperactivated in combat-related PTSD. Part of the PTSD neural substrate involving retrosplenial connections for scene construction and trauma reminiscence.',
+    cite:'Boccia et al. (2016): PCC in general ALE (BA 23/31) and combat-related PTSD; Hassabis & Maguire (2007)'
+  },
+  {
+    id:'thal', name:'Thalamus', short:'Thalamus',
+    pw:['learning','trauma'], cx:235, cy:178, rx:18, ry:14,
+    desc:'Sensory relay, attentional gating, arousal modulation, consciousness. Consistently altered in PTSD — may reflect altered conscious experience and hyperarousal. Hypoactivated bilaterally in ADHD/COM during phonological processing, suggesting impaired sensory filtering for learning.',
+    cite:'Boccia et al. (2016): midline/VL/MD thalamic nuclei in PTSD ALE; Langer et al. (2019): TYP > ADHD, COM bilateral thalamus'
+  },
+  {
+    id:'amyg', name:'Amygdala', short:'Amygdala',
+    pw:['trauma'], cx:218, cy:218, rx:14, ry:12,
+    desc:'Threat detection, fear conditioning, emotional salience. Notably, Boccia et al.\'s ALE meta-analysis did NOT find consistent amygdalar hyperactivation across PTSD studies — it disappeared vs. trauma-exposed controls, suggesting reactivity may relate to trauma exposure broadly rather than PTSD specifically.',
+    cite:'Boccia et al. (2016): amygdala not in general ALE; Patel et al. (2012): amygdala related to exposure generally; Carrion et al. (2013)'
+  },
+  {
+    id:'hipp', name:'Hippocampus', short:'Hippocampus',
+    pw:['learning','trauma'], cx:258, cy:228, rx:24, ry:10,
+    desc:'Declarative/episodic memory consolidation, contextual encoding, fear extinction context. Pediatric PTSD: reduced activation during memory retrieval; longitudinal volume reductions predicted by PTSD severity AND cortisol. Hyperactivated in adult PTSD ALE (Multiple Trace Theory — intrusive memory recurrence). Essential for vocabulary acquisition.',
+    cite:'Carrion et al. (2007): severity + cortisol predict ↓ volume; Carrion et al. (2010a): ↓ R hippocampal activation; Boccia et al. (2016): HC in ALE'
+  },
+  {
+    id:'ins', name:'Insular Cortex', short:'Insula',
+    pw:['trauma'], cx:188, cy:172, rx:13, ry:13,
+    desc:'Interoceptive awareness, monitoring internal body states, stress/mood perception. Bilateral insula hyperactivation is one of the most consistent findings across PTSD neuroimaging — correlated with symptom severity. May reflect interception of increased arousal from trauma-related stimuli.',
+    cite:'Boccia et al. (2016): bilateral insula in general PTSD ALE; Simmons et al. (2008); Craig (2002)'
+  },
+  {
+    id:'ang', name:'Angular Gyrus', short:'Angular Gyrus',
+    pw:['reading'], cx:332, cy:128, rx:20, ry:14,
+    desc:'PARIETAL READING CIRCUIT: Connects sound, meaning, and print — the cross-modal integration hub. Underactivated on average in dyslexia. These brain differences are present long before children learn to read (infants later diagnosed show differences in speech sound processing).',
+    cite:'Marks (2025): parietal circuit; D\'Mello & Gabrieli (2018); Leppänen et al. (2002); Yu et al. (2018)'
+  },
+  {
+    id:'smg', name:'Supramarginal Gyrus', short:'SMG',
+    pw:['reading'], cx:348, cy:108, rx:18, ry:13,
+    desc:'PARIETAL READING CIRCUIT: Phonological storage, grapheme-phoneme conversion. Hypoactivated during phonological processing in the COM group. Critical dorsal pathway node for sublexical decoding. Along with the angular gyrus, shows group-level underactivation in dyslexia.',
+    cite:'Marks (2025): parietal circuit; Langer et al. (2019): TYP > COM in SMG; Pugh et al. (2001)'
+  },
+  {
+    id:'stg', name:'Superior Temporal Gyrus / STS', short:'STG / STS',
+    pw:['reading','trauma'], cx:328, cy:178, rx:24, ry:14,
+    desc:'Auditory phonological processing, speech perception (reading); social cognition (trauma). STG volumes are LARGER in maltreated children. Consistently activated in PTSD ALE. STS shows decreased activation as reading speed increases. Part of the occipitotemporal speed-reading network.',
+    cite:'Langer et al. (2019): TYP > RD in STG; De Bellis et al. (2002b): ↑ STG volume in PTSD; Boccia et al. (2016); Sun et al. (2024)'
+  },
+  {
+    id:'vwfa', name:'Ventral Occipitotemporal / VWFA (Fusiform)', short:'vOT / VWFA',
+    pw:['reading'], cx:312, cy:238, rx:24, ry:12,
+    desc:'OCCIPITOTEMPORAL READING CIRCUIT: Supports fluent, automatic visual word recognition. Skilled readers shift from effortful frontal decoding → automatic posterior recognition here. RD children show consistent hypoactivation. Building automaticity in this circuit is a key goal of systematic, explicit literacy instruction.',
+    cite:'Marks (2025): OT circuit + developmental shift; Langer et al. (2019): TYP, ADHD, COM > RD; Sun et al. (2024): vOT in DCM; Dehaene & Cohen (2011)'
+  },
+  {
+    id:'cblm', name:'Cerebellum', short:'Cerebellum',
+    pw:['learning','trauma'], cx:372, cy:252, rx:30, ry:20,
+    desc:'Automatization, procedural memory, timing, emotion regulation via limbic/HPA connections. Smaller volumes in pediatric PTSD (posterior vermis). Hypoactivated during phonological processing in all clinical groups (RD, ADHD, COM). Supports reading fluency through skill automatization.',
+    cite:'Carrion et al. (2009): ↓ posterior vermis; De Bellis & Kuchibhatla (2006); Langer et al. (2019): TYP > all in cerebellum'
+  },
+  {
+    id:'bg', name:'Basal Ganglia / Striatum', short:'Basal Ganglia',
+    pw:['learning'], cx:213, cy:198, rx:16, ry:10,
+    desc:'Reward-based learning, habit formation, procedural memory. Reduced right striatal volume in ADHD. Part of the cerebellar-frontostriatal circuitry. MCC functional connectivity includes globus pallidus and putamen in PTSD.',
+    cite:'Langer et al. (2019): TYP > ADHD right striatum; Boccia et al. (2016): caudate/putamen in CR PTSD; Spencer et al. (2007)'
+  },
+  {
+    id:'io', name:'Inferior / Primary Occipital Cortex', short:'iO / V1',
+    pw:['reading'], cx:378, cy:188, rx:18, ry:18,
+    desc:'Initial visual processing of print, sensory input. In the occipitotemporal speed-reading model, iO is the sensory input region → vOT → pSTS/aSTS. Despite the common misconception, dyslexia is fundamentally linked to oral language and phonological processing — not vision.',
+    cite:'Sun et al. (2024): iO as sensory input in DCM; Marks (2025): dyslexia ≠ vision; Kovelman et al. (2012)'
+  },
+  {
+    id:'pt', name:'Planum Temporale', short:'Planum Temp.',
+    pw:['reading'], cx:300, cy:200, rx:18, ry:10,
+    desc:'Auditory processing, phonological representation. Decreased cortical thickness in RD and COM vs. TYP and ADHD — a shared anatomical risk factor. Connects oral language processing to print.',
+    cite:'Langer et al. (2019): TYP, ADHD > RD, COM; Marks (2025)'
+  },
+  {
+    id:'mcc', name:'Middle Cingulate Cortex', short:'MCC',
+    pw:['trauma'], cx:260, cy:92, rx:16, ry:12,
+    desc:'Pain processing, fear avoidance, motor component of noxious stimuli. More activated in PTSD after physical/sexual abuse than combat-related trauma. Functional connectivity with SMA, insula, amygdala, ACC, thalamus.',
+    cite:'Boccia et al. (2016): MCC in SP > CR contrast; Vogt (2005): pain processing subregions'
+  },
+];
+
+/* ================================================================
+   DATA: CONNECTIONS
+   ================================================================ */
+const CONNECTIONS = [
+  {from:'lifg',to:'smg', pw:'reading', lbl:'Arcuate Fasciculus'},
+  {from:'smg', to:'ang', pw:'reading', lbl:''},
+  {from:'ang', to:'stg', pw:'reading', lbl:''},
+  {from:'stg', to:'vwfa',pw:'reading', lbl:'Ventral stream'},
+  {from:'io',  to:'vwfa',pw:'reading', lbl:'iO→vOT'},
+  {from:'vwfa',to:'stg', pw:'reading', lbl:'vOT→pSTS'},
+  {from:'lifg',to:'dlpfc',pw:'reading',lbl:''},
+  {from:'lifg',to:'pt',  pw:'reading', lbl:''},
+  {from:'dlpfc',to:'acc', pw:'learning',lbl:''},
+  {from:'dlpfc',to:'thal',pw:'learning',lbl:''},
+  {from:'thal',to:'bg',  pw:'learning', lbl:''},
+  {from:'bg',  to:'cblm',pw:'learning', lbl:'Frontostriatal-cerebellar'},
+  {from:'hipp',to:'dlpfc',pw:'learning',lbl:'Memory↔EF'},
+  {from:'hipp',to:'acc', pw:'learning', lbl:''},
+  {from:'amyg',to:'mpfc',pw:'trauma',  lbl:'Regulation (↓ in PTSD)'},
+  {from:'amyg',to:'hipp',pw:'trauma',  lbl:'Fear ↔ Memory'},
+  {from:'amyg',to:'acc', pw:'trauma',  lbl:''},
+  {from:'amyg',to:'ins', pw:'trauma',  lbl:''},
+  {from:'ins', to:'acc', pw:'trauma',  lbl:''},
+  {from:'ins', to:'mcc', pw:'trauma',  lbl:''},
+  {from:'mpfc',to:'acc', pw:'trauma',  lbl:''},
+  {from:'acc', to:'mcc', pw:'trauma',  lbl:''},
+  {from:'hipp',to:'pcc', pw:'trauma',  lbl:'Scene construction'},
+  {from:'cblm',to:'acc', pw:'learning',lbl:''},
+];
+
+/* ================================================================
+   APPLICATION STATE
+   ================================================================ */
+const state = {
+  pathways: { reading: true, learning: true, trauma: true },
+  selected: null,
+  hovered: null,
+  clinical: false,
+};
+
+function getDetail() {
+  const id = state.selected || state.hovered;
+  return id ? REGIONS.find(r => r.id === id) : null;
+}
+
+function regionMap() {
+  const m = {};
+  REGIONS.forEach(r => m[r.id] = r);
+  return m;
+}
+const RMAP = regionMap();
+
+/* ================================================================
+   RENDER
+   ================================================================ */
+function render() {
+  const app = document.getElementById('app');
+  app.innerHTML = `
+    ${renderHeader()}
+    ${renderControls()}
+    <div class="main-grid">
+      <div class="brain-wrap">${renderSVG()}</div>
+      <div class="side-panel">
+        ${renderDetail()}
+        ${renderLegend()}
+        ${renderClinical()}
+      </div>
+    </div>
+    ${renderFooter()}
+  `;
+  bindEvents();
+}
+
+function renderHeader() {
+  return `<div class="header">
+    <h1>Neural Pathways of Literacy, Learning &amp; Trauma</h1>
+    <p class="subtitle">Medial Sagittal View — Left Hemisphere &nbsp;•&nbsp; Evidence-Based Functional Connectivity Networks</p>
+  </div>`;
+}
+
+function renderControls() {
+  const btns = [
+    {key:'reading', color:'var(--reading)', label:'Reading Brain'},
+    {key:'learning',color:'var(--learning)',label:'Learning Brain'},
+    {key:'trauma',  color:'var(--trauma)',  label:'Trauma Brain'},
+  ].map(b => {
+    const on = state.pathways[b.key];
+    return `<button class="pw-btn" data-pw="${b.key}" data-active="${on}"
+      style="border-color:${b.color};${on ? `background:${b.color};color:var(--bg-deep)` : `color:${b.color}`}"
+      aria-pressed="${on}" aria-label="Toggle ${b.label}">
+      ${on ? '●' : '○'} ${b.label}
+    </button>`;
+  }).join('');
+
+  return `<div class="controls" role="toolbar" aria-label="Pathway toggles">
+    ${btns}
+    <button class="clin-toggle" data-active="${state.clinical}" aria-expanded="${state.clinical}">
+      ${state.clinical ? '▾' : '▸'} Clinical Implications
+    </button>
+  </div>`;
+}
+
+function renderSVG() {
+  const visR = REGIONS.filter(r => r.pw.some(p => state.pathways[p]));
+  const visC = CONNECTIONS.filter(c => state.pathways[c.pw]);
+
+  let conns = visC.map((c,i) => {
+    const f = RMAP[c.from], t = RMAP[c.to];
+    if (!f || !t) return '';
+    const col = COLORS[c.pw];
+    const mx = (f.cx+t.cx)/2, my = (f.cy+t.cy)/2;
+    const off = ((i%3)-1)*10;
+    const dash = c.pw==='trauma' ? 'stroke-dasharray="4,3"' : '';
+    let lbl = '';
+    if (c.lbl) lbl = `<text x="${mx+off}" y="${my+off-5}" fill="${col}" font-size="4.6" font-family="var(--font-mono)" text-anchor="middle" opacity="0.6">${c.lbl}</text>`;
+    return `<g opacity="0.48">
+      <path d="M${f.cx},${f.cy} Q${mx+off},${my+off} ${t.cx},${t.cy}" fill="none" stroke="${col}" stroke-width="1.3" ${dash} marker-end="url(#a-${c.pw})"/>
+      ${lbl}
+    </g>`;
+  }).join('');
+
+  let nodes = visR.map(r => {
+    const isH = state.hovered===r.id, isS = state.selected===r.id;
+    const isO = r.pw.length > 1;
+    const col = regionColor(r.pw);
+    const fill = rgba(col, isH||isS ? 0.55 : 0.38);
+    const sw = isH||isS ? 1.8 : 1.1;
+    const filt = isH ? 'filter="url(#gl)"' : '';
+
+    let glow = '';
+    if (isH||isS) glow = `<ellipse cx="${r.cx}" cy="${r.cy}" rx="${r.rx+5}" ry="${r.ry+5}" fill="${rgba(col,0.18)}" filter="url(#sg)"/>`;
+
+    let ring = '';
+    if (isO) ring = `<ellipse cx="${r.cx}" cy="${r.cy}" rx="${r.rx+3}" ry="${r.ry+3}" fill="none" stroke="rgba(255,255,255,0.2)" stroke-width="0.8" stroke-dasharray="2.5,2"/>`;
+
+    let dots = '';
+    if (isO) {
+      dots = r.pw.filter(p => state.pathways[p]).map((p,pi) => {
+        const ang = (pi/r.pw.length)*360-90;
+        const dist = Math.max(r.rx,r.ry)+5.5;
+        const dx = r.cx+dist*Math.cos(ang*Math.PI/180);
+        const dy = r.cy+dist*Math.sin(ang*Math.PI/180);
+        return `<circle cx="${dx}" cy="${dy}" r="2.8" fill="${COLORS[p]}" stroke="var(--bg-deep)" stroke-width="0.7"/>`;
+      }).join('');
+    }
+
+    const lines = r.short.length > 16 ? r.short.split(/[\s/]+/).map((w,i) =>
+      `<tspan x="${r.cx}" dy="${i===0?-3:6}">${esc(w)}</tspan>`).join('') : esc(r.short);
+
+    return `<g class="region-node" data-id="${r.id}" role="button" tabindex="0" aria-label="${r.name}">
+      ${glow}${ring}
+      <ellipse cx="${r.cx}" cy="${r.cy}" rx="${r.rx}" ry="${r.ry}" fill="${fill}" stroke="${col}" stroke-width="${sw}" ${filt}/>
+      ${dots}
+      <text x="${r.cx}" y="${r.cy + 1}" text-anchor="middle" dominant-baseline="middle" fill="var(--text-primary)" font-size="4.8" font-family="var(--font-display)" font-weight="600" pointer-events="none">${lines}</text>
+    </g>`;
+  }).join('');
+
+  // Reading circuit zone labels (Marks 2025)
+  let circuitLabels = '';
+  if (state.pathways.reading) {
+    circuitLabels = `
+      <text x="130" y="182" fill="var(--reading)" font-size="5.5" font-family="var(--font-mono)" font-weight="500" opacity="0.4">F</text>
+      <text x="340" y="96"  fill="var(--reading)" font-size="5.5" font-family="var(--font-mono)" font-weight="500" opacity="0.4">P</text>
+      <text x="320" y="255" fill="var(--reading)" font-size="5.5" font-family="var(--font-mono)" font-weight="500" opacity="0.4">OT</text>`;
+  }
+
+  return `<svg class="brain-svg" viewBox="70 15 390 310" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Medial sagittal brain diagram showing three neural pathway networks">
+    <defs>
+      <radialGradient id="bg-g" cx="50%" cy="40%" r="55%"><stop offset="0%" stop-color="#1A1E38"/><stop offset="100%" stop-color="#0E1224"/></radialGradient>
+      <filter id="gl"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+      <filter id="sg"><feGaussianBlur stdDeviation="5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+      <marker id="a-reading"  viewBox="0 0 10 10" refX="9" refY="5" markerWidth="4.5" markerHeight="4.5" orient="auto" fill="var(--reading)"><path d="M0 0L10 5L0 10z"/></marker>
+      <marker id="a-learning" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="4.5" markerHeight="4.5" orient="auto" fill="var(--learning)"><path d="M0 0L10 5L0 10z"/></marker>
+      <marker id="a-trauma"   viewBox="0 0 10 10" refX="9" refY="5" markerWidth="4.5" markerHeight="4.5" orient="auto" fill="var(--trauma)"><path d="M0 0L10 5L0 10z"/></marker>
+    </defs>
+
+    <!-- Brain outline — medial sagittal -->
+    <path d="M155,40 C130,38 108,50 100,72 C90,98 95,130 100,155 C103,168 107,180 112,192 C118,208 125,222 135,235 C145,248 158,258 175,262 C190,265 210,264 228,260 C245,256 260,248 275,240 C290,232 305,224 318,218 C328,213 336,210 342,215 C350,222 355,235 358,248 C360,256 364,262 370,264 C378,267 386,262 392,252 C398,240 400,224 398,208 C396,192 390,176 385,165 C380,155 378,148 380,138 C383,124 388,110 390,95 C392,80 390,65 382,52 C372,38 355,30 335,28 C310,25 285,28 260,32 C235,36 210,38 185,40 C170,41 160,40 155,40Z" fill="url(#bg-g)" stroke="#252A48" stroke-width="1.3"/>
+
+    <!-- Corpus callosum -->
+    <path d="M165,148 C185,132 220,125 260,128 C300,131 335,140 360,155" fill="none" stroke="#333858" stroke-width="5.5" stroke-linecap="round" opacity="0.55"/>
+
+    <!-- Brain stem -->
+    <path d="M240,248 C238,258 235,270 232,280 C230,288 228,296 230,300 C232,305 238,305 242,300 C246,292 245,280 243,268Z" fill="#151930" stroke="#252A48" stroke-width="0.8" opacity="0.75"/>
+
+    <!-- Sulci -->
+    <g stroke="#1E2340" stroke-width="0.7" fill="none" opacity="0.4">
+      <path d="M130,85C145,80 160,82 175,78"/><path d="M140,105C160,98 180,100 195,95"/>
+      <path d="M115,135C130,128 145,130 158,126"/><path d="M200,55C220,50 245,48 270,50"/>
+      <path d="M210,75C235,68 260,66 285,70"/><path d="M230,95C255,88 280,86 305,90"/>
+      <path d="M280,110C305,105 325,102 345,108"/><path d="M290,135C310,130 335,128 355,135"/>
+      <path d="M180,180C200,175 220,172 240,175"/><path d="M260,195C280,190 300,192 315,195"/>
+      <path d="M150,210C170,205 190,208 210,210"/>
+    </g>
+
+    <!-- Connections -->${conns}
+    <!-- Regions -->${nodes}
+
+    <!-- Anatomical labels -->
+    <g font-family="var(--font-mono)" font-weight="300" fill="#2A3050">
+      <text x="115" y="48" font-size="6.5" opacity="0.45">FRONTAL</text>
+      <text x="365" y="48" font-size="6.5" opacity="0.45">PARIETAL</text>
+      <text x="388" y="168" font-size="6" opacity="0.4">OCC.</text>
+      <text x="268" y="262" font-size="6.5" opacity="0.45">TEMPORAL</text>
+      <text x="358" y="278" font-size="6" opacity="0.4">CEREBELLUM</text>
+      <text x="78"  y="28" font-size="6" opacity="0.35" letter-spacing="1.5">← ANTERIOR</text>
+      <text x="336" y="28" font-size="6" opacity="0.35" letter-spacing="1.5">POSTERIOR →</text>
+    </g>
+
+    <!-- Reading circuit zone labels (Marks, 2025) -->
+    ${circuitLabels}
+  </svg>`;
+}
+
+function renderDetail() {
+  const d = getDetail();
+  if (!d) return `<div class="card"><p style="font-size:0.78rem;color:var(--text-tertiary);font-style:italic">Hover or tap a brain region to see its functional role, pathway membership, and supporting evidence.</p></div>`;
+
+  const col = regionColor(d.pw);
+  const badges = d.pw.map(p => `<span class="badge" style="background:${COLORS[p]};color:var(--bg-deep)">${p}</span>`).join('');
+  const overlap = d.pw.length > 1 ? `<span class="badge" style="background:rgba(255,255,255,0.08);color:var(--learning-light);border:1px solid rgba(255,255,255,0.1)">${d.pw.length===3?'triple overlap':'overlap zone'}</span>` : '';
+
+  return `<div class="card">
+    <div class="region-title" style="color:${col}">${esc(d.name)}</div>
+    <div style="margin-bottom:6px">${badges}${overlap}</div>
+    <p class="region-desc">${esc(d.desc)}</p>
+    <p class="region-evidence">${esc(d.cite)}</p>
+  </div>`;
+}
+
+function renderLegend() {
+  const items = [
+    {key:'reading', label:'The Reading Brain', sub:'Frontal, parietal & occipitotemporal circuits (Marks, 2025)', line:'solid'},
+    {key:'learning',label:'The Learning Brain',sub:'Executive, memory & procedural loops', line:'solid'},
+    {key:'trauma', label:'The Trauma Brain',  sub:'Threat, stress & regulation pathways', line:'dashed'},
+  ];
+
+  const overlaps = [
+    {colors:['reading','learning'],         label:'Reading ∩ Learning', sub:'dlPFC — Executive support for decoding'},
+    {colors:['reading','trauma'],           label:'Reading ∩ Trauma',   sub:'STG/STS — Phonology & social cognition'},
+    {colors:['learning','trauma'],          label:'Learning ∩ Trauma',  sub:'mPFC, Hippocampus, Thalamus, Cerebellum'},
+    {colors:['reading','learning','trauma'],label:'All Three Networks', sub:'ACC — Shared risk (Langer et al., 2019)'},
+  ];
+
+  return `<div class="card">
+    <div class="legend-heading">Pathway Legend</div>
+    ${items.map(i => `<div class="legend-row">
+      <div class="legend-swatch" style="background:${COLORS[i.key]}"></div>
+      <div>
+        <div class="legend-label" style="color:${COLORS[i.key]}">${i.label}</div>
+        <div class="legend-sub">${i.sub} (${i.line} line)</div>
+      </div>
+    </div>`).join('')}
+
+    <div style="border-top:1px solid var(--border-dim);margin-top:8px;padding-top:8px">
+      <div class="legend-heading">Key Overlap Zones</div>
+      ${overlaps.map(o => `<div class="overlap-row">
+        <div class="overlap-dots">${o.colors.map(c => `<div class="overlap-dot" style="background:${COLORS[c]}"></div>`).join('')}</div>
+        <div>
+          <span class="overlap-label">${o.label}</span>
+          <span class="overlap-sub">${o.sub}</span>
+        </div>
+      </div>`).join('')}
+    </div>
+  </div>`;
+}
+
+function renderClinical() {
+  return `<div class="card clinical-panel" data-open="${state.clinical}">
+    <div class="legend-heading" style="color:var(--overlap-all)">Clinical Implications for Literacy Intervention</div>
+    <p><strong>The ACC as shared risk factor:</strong> Langer et al. (2019) found reduced cortical thickness in ACC across RD, ADHD, and COM groups — a convergence point for all three networks. When a child's trauma brain activates this region for threat monitoring, it competes directly with the same circuitry needed for error monitoring during decoding and executive control during learning.</p>
+    <p><strong>Reversibility evidence:</strong> Nijdam et al. (2018) found that verbal memory, processing speed, and executive functioning significantly improved after trauma-focused therapy (d&nbsp;=&nbsp;0.16–0.68), with greater PTSD symptom reduction predicting better post-treatment cognition. These deficits are at least partly <em>state-dependent</em> — addressing trauma can free up neural resources for literacy.</p>
+    <p><strong>Hippocampal vulnerability:</strong> Carrion et al. (2007) showed PTSD severity and cortisol levels independently predict hippocampal volume reduction in children — the same structure essential for vocabulary acquisition and memory consolidation during reading instruction.</p>
+    <p><strong>The three reading circuits:</strong> Marks (2025) describes frontal (L-IFG: sound analysis), parietal (angular gyrus/SMG: sound-meaning-print), and occipitotemporal (vOT/VWFA: automatic word recognition) circuits. Skilled reading reflects a developmental shift from effortful frontal decoding → automatic posterior recognition. Dyslexia disrupts parietal and occipitotemporal circuits — and these differences are present <em>before children learn to read</em>.</p>
+    <p><strong>Pre-reading vulnerability × trauma:</strong> If a child arrives with both pre-existing phonological processing differences (dyslexia risk) AND a dysregulated stress response competing for shared circuits (ACC, hippocampus, PFC), the demand on neural resources is compounded. Systematic, explicit instruction builds automaticity in the occipitotemporal circuit — but only if the stress response isn't simultaneously consuming those same frontal and cingulate systems.</p>
+    <p><strong>Guiding principles:</strong> Instruction should be explicit, sequenced and cumulative, and data-driven (Marks, 2025; Gabrieli, 2016). A trauma-informed lens adds: co-regulation before cognitive demand, awareness that avoidance/numbing may look like disengagement, and understanding that treatment of the trauma response can directly improve the neurocognitive substrate of reading.</p>
+  </div>`;
+}
+
+function renderFooter() {
+  return `<div class="footer">
+    <p>RTN Communication &amp; Literacy &nbsp;•&nbsp; Trauma-Informed Literacy Intervention Course<br>
+    Evidence: Marks (2025); Boccia et al. (2016); Langer et al. (2019); Sun et al. (2024); Carrion et al. (2013); Nijdam et al. (2018); D'Mello &amp; Gabrieli (2018); Kovelman et al. (2012)<br>
+    Simplified functional connectivity based on fMRI, structural MRI, and ALE meta-analytic evidence. Toggle pathways to isolate networks. Click regions for detail.<br>
+    <span style="opacity:0.7">© 2025 Rachel Terra Norton / RTN Communication &amp; Literacy · Licensed under <a href="https://creativecommons.org/licenses/by-nc/4.0/" style="color:inherit;text-decoration:underline" target="_blank" rel="noopener">CC BY-NC 4.0</a></span></p>
+  </div>`;
+}
+
+/* ================================================================
+   EVENTS
+   ================================================================ */
+function bindEvents() {
+  document.querySelectorAll('.pw-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const pw = btn.dataset.pw;
+      state.pathways[pw] = !state.pathways[pw];
+      render();
+    });
+  });
+
+  document.querySelector('.clin-toggle')?.addEventListener('click', () => {
+    state.clinical = !state.clinical;
+    render();
+  });
+
+  document.querySelectorAll('.region-node').forEach(node => {
+    node.addEventListener('mouseenter', () => { state.hovered = node.dataset.id; render(); });
+    node.addEventListener('mouseleave', () => { state.hovered = null; render(); });
+    node.addEventListener('click', () => {
+      state.selected = state.selected === node.dataset.id ? null : node.dataset.id;
+      render();
+    });
+    node.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        state.selected = state.selected === node.dataset.id ? null : node.dataset.id;
+        render();
+      }
+    });
+  });
+}
+
+function esc(s) { return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+/* ================================================================
+   INIT
+   ================================================================ */
+render();
+</script>
+</body>
+</html>
