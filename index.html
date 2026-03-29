@@ -13,14 +13,14 @@
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
-  --bg:#060A14;--card:rgba(12,16,30,0.96);--border:rgba(255,255,255,0.06);
+  --bg:#060A14;--card:rgba(18,24,45,0.97);--border:rgba(255,255,255,0.08);
   --t1:#E4E2DD;--t2:#A0A8C0;--t3:#606880;--t4:#3A4060;
   --reading:#0077B6;--learning:#D4950A;--trauma:#C62828;
   --overlap-all:#9070B0;
   --ff:'Outfit',sans-serif;--fm:'Space Mono',monospace;
 }
 html{font-size:16px;-webkit-font-smoothing:antialiased}
-body{background:var(--bg);color:var(--t1);font-family:var(--ff);line-height:1.55;min-height:100vh}
+body{background:var(--bg);color:var(--t1);font-family:var(--ff);font-size:15px;line-height:1.55;min-height:100vh}
 .wrap{max-width:1180px;margin:0 auto;padding:20px 16px 32px}
 .hdr{text-align:center;margin-bottom:14px}
 .hdr h1{font-size:clamp(1.1rem,2.8vw,1.65rem);font-weight:300;letter-spacing:.02em;
@@ -28,20 +28,20 @@ body{background:var(--bg);color:var(--t1);font-family:var(--ff);line-height:1.55
   -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
 .hdr .sub{font-family:var(--fm);font-size:.68rem;font-weight:300;color:var(--t4);letter-spacing:.04em;margin-top:2px}
 .ctrls{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin-bottom:14px;align-items:center}
-.pb{padding:6px 15px;border:1.5px solid;border-radius:5px;background:transparent;font-family:var(--fm);font-size:.64rem;font-weight:400;letter-spacing:.04em;text-transform:uppercase;cursor:pointer;transition:all .25s}
-.pb:hover{transform:translateY(-1px)}
-.pb[data-on="1"]{color:var(--bg)!important}
-.pb[data-on="0"]{opacity:.4}
+.pb{padding:6px 15px;border:2px solid;border-radius:5px;background:transparent;font-family:var(--fm);font-size:.64rem;font-weight:400;letter-spacing:.04em;text-transform:uppercase;cursor:pointer;transition:all .25s}
+.pb:hover{transform:translateY(-1px);filter:brightness(1.2)}
+.pb[data-on="1"]{color:var(--bg)!important;border-width:2.5px;filter:brightness(1.1)}
+.pb[data-on="0"]{opacity:.45}
 .ct{padding:5px 12px;border:1px solid rgba(144,112,176,.3);border-radius:5px;background:rgba(144,112,176,.06);color:#B898D0;font-family:var(--fm);font-size:.62rem;cursor:pointer;transition:all .25s}
 .ct:hover{background:rgba(144,112,176,.12)}
 .ct[data-on="1"]{background:rgba(144,112,176,.18);border-color:rgba(144,112,176,.5)}
 .grid{display:grid;grid-template-columns:1fr 320px;gap:16px;align-items:start}
 @media(max-width:900px){.grid{grid-template-columns:1fr}}
-.card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:15px;backdrop-filter:blur(12px);margin-bottom:10px}
+.card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:19px;backdrop-filter:blur(12px);margin-bottom:10px}
 .badge{display:inline-block;padding:2px 7px;border-radius:3px;font-family:var(--fm);font-size:.56rem;font-weight:500;letter-spacing:.03em;text-transform:uppercase;margin:0 3px 3px 0}
 .rn{cursor:pointer;transition:filter .15s}
 .rn:hover{filter:brightness(1.35)}
-.lh{font-family:var(--fm);font-size:.56rem;font-weight:400;letter-spacing:.08em;text-transform:uppercase;color:var(--t3);margin-bottom:6px}
+.lh{font-family:var(--fm);font-size:.62rem;font-weight:400;letter-spacing:.08em;text-transform:uppercase;color:var(--t3);margin-bottom:6px}
 .clin{max-height:0;overflow:hidden;opacity:0;transition:max-height .5s,opacity .4s,padding .4s;padding:0 15px}
 .clin.open{max-height:3000px;opacity:1;padding:15px}
 .clin p{font-size:.72rem;color:var(--t2);line-height:1.65;margin-bottom:8px}
@@ -259,10 +259,10 @@ function drawNodes(){
     let h='';
     if(isH||isS)h+=`<ellipse cx="${ncx}" cy="${ncy}" rx="${r.rx+6}" ry="${r.ry+6}" fill="${rga(col,.16)}" filter="url(#sgl)"/>`;
     if(isO)h+=`<ellipse cx="${ncx}" cy="${ncy}" rx="${r.rx+3}" ry="${r.ry+3}" fill="none" stroke="rgba(255,255,255,.2)" stroke-width=".8" stroke-dasharray="2.5,2"/>`;
-    h+=`<ellipse cx="${ncx}" cy="${ncy}" rx="${r.rx}" ry="${r.ry}" fill="${rga(col,isH||isS?.55:.32)}" stroke="${col}" stroke-width="${isH||isS?2:1.1}"${currentView==='lateral'&&r.id==='ins'?' stroke-dasharray="3,2"':''}${isH?' filter="url(#glo)"':''}/>`;
+    h+=`<ellipse cx="${ncx}" cy="${ncy}" rx="${r.rx}" ry="${r.ry}" fill="${rga(col,isH||isS?.55:.32)}" stroke="${col}" stroke-width="${isH||isS?2.5:1.5}"${currentView==='lateral'&&r.id==='ins'?' stroke-dasharray="3,2"':''}${isH?' filter="url(#glo)"':''}/>`;
     if(isO)r.pw.filter(p=>pw[p]).forEach((p,i)=>{const a=(i/r.pw.length)*360-90,d=Math.max(r.rx,r.ry)+6;h+=`<circle cx="${r.cx+d*Math.cos(a*Math.PI/180)}" cy="${r.cy+d*Math.sin(a*Math.PI/180)}" r="3" fill="${C[p]}" stroke="var(--bg)" stroke-width=".7"/>`;});
-    const ln=r.short.length>16?r.short.split(/[\s/]+/).map((w,i)=>`<tspan x="${ncx}" dy="${i===0?-4:7}">${esc(w)}</tspan>`).join(''):esc(r.short);
-    h+=`<text x="${ncx}" y="${r.cy+1}" text-anchor="middle" dominant-baseline="middle" fill="var(--t1)" font-size="5" font-family="var(--ff)" font-weight="600" pointer-events="none">${ln}</text>`;
+    const ln=r.short.length>16?r.short.split(/[\s/]+/).map((w,i)=>`<tspan x="${ncx}" dy="${i===0?-5:8}">${esc(w)}</tspan>`).join(''):esc(r.short);
+    h+=`<text x="${ncx}" y="${ncy+1}" text-anchor="middle" dominant-baseline="middle" fill="var(--t1)" font-size="6.5" font-family="var(--ff)" font-weight="600" pointer-events="none" stroke="var(--bg)" stroke-width=".3" paint-order="stroke">${ln}</text>`;
     const gr=document.createElementNS('http://www.w3.org/2000/svg','g');
     gr.className.baseVal='rn';gr.setAttribute('tabindex','0');gr.setAttribute('role','button');gr.setAttribute('aria-label',r.name);
     gr.innerHTML=h;
@@ -277,13 +277,13 @@ function drawNodes(){
 function updatePanel(){
   const d=sel?RM[sel]:hov?RM[hov]:null,p=document.getElementById('panel');let h='';
   if(d){const col=rc(d.pw),bd=d.pw.map(p=>`<span class="badge" style="background:${C[p]};color:var(--bg)">${p}</span>`).join(''),ov=d.pw.length>1?`<span class="badge" style="background:rgba(255,255,255,.08);color:#FCD34D;border:1px solid rgba(255,255,255,.1)">${d.pw.length===3?'triple overlap':'overlap zone'}</span>`:'';
-    h+=`<div class="card"><div style="font-size:.88rem;font-weight:600;color:${col};margin-bottom:4px">${esc(d.name)}</div><div style="margin-bottom:6px">${bd}${ov}</div><p style="font-size:.78rem;line-height:1.6;color:var(--t2);margin-bottom:8px">${esc(d.desc)}</p><p style="font-family:var(--fm);font-size:.6rem;color:var(--t3);line-height:1.5">${esc(d.cite)}</p></div>`;
-  }else h+=`<div class="card"><p style="font-size:.78rem;color:var(--t3);font-style:italic">Hover or tap a brain region to see its functional role, pathway membership, and supporting evidence.</p></div>`;
+    h+=`<div class="card" style="border-top:3px solid ${col}"><div style="font-size:1.12rem;font-weight:600;color:${col};margin-bottom:4px">${esc(d.name)}</div><div style="margin-bottom:6px">${bd}${ov}</div><p style="font-size:.82rem;line-height:1.6;color:var(--t2);margin-bottom:8px">${esc(d.desc)}</p><p style="font-family:var(--fm);font-size:.69rem;color:#888;line-height:1.4;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${esc(d.cite)}</p></div>`;
+  }else h+=`<div class="card"><p style="font-size:.82rem;color:var(--t3);font-style:italic">Hover or tap a brain region to see its functional role, pathway membership, and supporting evidence.</p></div>`;
 
   h+=`<div class="card"><div class="lh">Pathway Legend</div>`;
-  [{k:'reading',l:'The Reading Brain',s:'Frontal, parietal & occipitotemporal (Marks, 2025)',n:'solid'},{k:'learning',l:'The Learning Brain',s:'Executive, memory & procedural loops',n:'solid'},{k:'trauma',l:'The Trauma Brain',s:'Threat, stress & regulation pathways',n:'dashed'}].forEach(i=>{h+=`<div style="display:flex;align-items:flex-start;margin-bottom:5px"><div style="width:8px;height:8px;border-radius:2px;flex-shrink:0;background:${C[i.k]};margin:4px 7px 0 0"></div><div><div style="font-size:.72rem;font-weight:600;color:${C[i.k]}">${i.l}</div><div style="font-size:.66rem;color:var(--t3)">${i.s} (${i.n})</div></div></div>`});
+  [{k:'reading',l:'The Reading Brain',s:'Frontal, parietal & occipitotemporal (Marks, 2025)',n:'solid',tag:'Reading'},{k:'learning',l:'The Learning Brain',s:'Executive, memory & procedural loops',n:'solid',tag:'Learning'},{k:'trauma',l:'The Trauma Brain',s:'Threat, stress & regulation pathways',n:'dashed',tag:'Trauma'}].forEach(i=>{h+=`<div style="display:flex;align-items:flex-start;margin-bottom:8px"><div style="flex-shrink:0;margin:2px 8px 0 0;text-align:center"><div style="width:10px;height:10px;border-radius:2px;background:${C[i.k]};margin:0 auto"></div><div style="font-size:.5rem;color:var(--t3);margin-top:1px">${i.tag}</div></div><div><div style="font-size:.78rem;font-weight:600;color:${C[i.k]}">${i.l}</div><div style="font-size:.72rem;color:var(--t3)">${i.s} (${i.n})</div></div></div>`});
   h+=`<div style="border-top:1px solid var(--border);margin-top:8px;padding-top:8px"><div class="lh">Key Overlap Zones</div>`;
-  [{c:['reading','learning'],l:'Reading ∩ Learning',s:'dlPFC'},{c:['reading','trauma'],l:'Reading ∩ Trauma',s:'STG/STS'},{c:['learning','trauma'],l:'Learning ∩ Trauma',s:'mPFC, Hippocampus, Thalamus, Cerebellum'},{c:['reading','learning','trauma'],l:'All Three',s:'ACC — Shared risk (Langer et al.)'}].forEach(o=>{const dots=o.c.map(c=>`<div style="width:6px;height:6px;border-radius:50%;background:${C[c]};margin-right:-1.5px;border:.7px solid var(--bg)"></div>`).join('');h+=`<div style="display:flex;align-items:flex-start;margin-bottom:4px"><div style="display:flex;margin:3px 6px 0 0">${dots}</div><div><span style="font-size:.66rem;color:var(--t2)">${o.l}</span><span style="font-size:.6rem;color:var(--t4);display:block">${o.s}</span></div></div>`});
+  [{c:['reading','learning'],l:'Reading ∩ Learning',s:'dlPFC'},{c:['reading','trauma'],l:'Reading ∩ Trauma',s:'STG/STS'},{c:['learning','trauma'],l:'Learning ∩ Trauma',s:'mPFC, Hippocampus, Thalamus, Cerebellum'},{c:['reading','learning','trauma'],l:'All Three',s:'ACC — Shared risk (Langer et al.)'}].forEach(o=>{const dots=o.c.map(c=>`<div style="width:7px;height:7px;border-radius:50%;background:${C[c]};margin-right:-1.5px;border:.7px solid var(--bg)"></div>`).join('');h+=`<div style="display:flex;align-items:flex-start;margin-bottom:6px"><div style="display:flex;margin:3px 7px 0 0">${dots}</div><div><span style="font-size:.75rem;color:var(--t2)">${o.l}</span><span style="font-size:.66rem;color:var(--t4);display:block">${o.s}</span></div></div>`});
   h+=`</div></div>`;
 
   h+=`<div class="card clin${clin?' open':''}"><div class="lh" style="color:var(--overlap-all)">Clinical Implications for Literacy Intervention</div><p><strong>The ACC as shared risk:</strong> Langer et al. (2019) found reduced cortical thickness in ACC across RD, ADHD, and COM groups. When trauma activates this region for threat monitoring, it competes with error monitoring during decoding and executive control during learning.</p><p><strong>Reversibility:</strong> Nijdam et al. (2018) found verbal memory, processing speed, and executive functioning improved after trauma-focused therapy (d = 0.16–0.68). These deficits are partly <em>state-dependent</em> — addressing trauma frees resources for literacy.</p><p><strong>Hippocampal vulnerability:</strong> Carrion et al. (2007) showed PTSD severity and cortisol predict hippocampal volume reduction — the same structure essential for vocabulary acquisition.</p><p><strong>Three reading circuits:</strong> Marks (2025): frontal (sound analysis), parietal (sound-meaning-print), occipitotemporal (automatic recognition). Dyslexia disrupts parietal and OT circuits — differences exist <em>before children learn to read</em>.</p><p><strong>Compounding risk:</strong> Pre-existing phonological differences plus dysregulated stress competing for shared circuits (ACC, hippocampus, PFC) compounds demand. Systematic instruction builds OT automaticity — but only if stress isn't consuming those same systems.</p><p><strong>Principles:</strong> Explicit, sequenced, data-driven instruction (Marks, 2025). Trauma-informed lens adds: co-regulation before cognitive demand, and treating the trauma response directly improves the neurocognitive substrate of reading.</p></div>`;
