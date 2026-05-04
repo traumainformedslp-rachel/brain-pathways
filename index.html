@@ -9,47 +9,47 @@
 <link rel="license" href="https://creativecommons.org/licenses/by-nc/4.0/">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600;9..40,700&display=swap" rel="stylesheet">
 <script>(function(){var s=localStorage.getItem('rtn-theme');if(s==='dark')document.documentElement.setAttribute('data-theme','dark')})();</script>
 <style>
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
 :root{
   /* Teal-accent system shared with the RTN Student Self-Report intake */
-  --bg:#f0f4f4;--bg2:#ffffff;--bg3:#f7fafa;
-  --text:#1c2d2d;--text2:#3d5555;--text3:#7a9191;
-  --border:#d4dfdf;--border-lt:#e6eced;
+  --bg:#ffffff;--bg2:#ffffff;--bg3:#ffffff;
+  --text:#0f1419;--text2:#4a5560;--text3:#9aa0a8;
+  --border:#ebebeb;--border-lt:#ebebeb;
   --r:8px;--r-lg:14px;
   --sans:'DM Sans',system-ui,sans-serif;
   --serif:'DM Sans',system-ui,sans-serif;
   --mono:'DM Sans',system-ui,sans-serif;
   /* per-feature accents */
-  --reading:#b8a0d8;--reading-bg:rgba(184,160,216,0.15);   /* lavender */
-  --learning:#8dd4b0;--learning-bg:rgba(141,212,176,0.15); /* mint */
-  --trauma:#f4a0b5;--trauma-bg:rgba(244,160,181,0.15);     /* rose */
+  --reading:#2a9d8f;--reading-bg:rgba(42,157,143,0.15);   /* teal */
+  --learning:#45b88f;--learning-bg:rgba(69,184,143,0.15); /* teal-green */
+  --trauma:#e07a7a;--trauma-bg:rgba(224,122,122,0.15);     /* muted red */
   --overlap-all:#1a7a7a;                                   /* teal */
-  --rainbow:linear-gradient(90deg,#8dd4b0 0%,#b8a0d8 100%);
-  --shadow:0 1px 4px rgba(26,122,122,0.08),0 2px 8px rgba(26,122,122,0.04);
-  --shadow-md:0 4px 12px rgba(26,122,122,0.10),0 8px 24px rgba(26,122,122,0.06);
-  --svg-bg:#f0faf9;--svg-filter:brightness(1.02) saturate(0.85)
+  --rainbow:#2a9d8f;
+  --shadow:0 1px 4px rgba(42,157,143,0.08),0 2px 8px rgba(42,157,143,0.04);
+  --shadow-md:0 4px 12px rgba(42,157,143,0.10),0 8px 24px rgba(42,157,143,0.06);
+  --svg-bg:#ffffff;--svg-filter:brightness(1.02) saturate(0.85)
 }
 [data-theme="dark"]{
-  --bg:#1a1815;--bg2:#232020;--bg3:#1f1d1a;
-  --text:#ece5d9;--text2:#b9b0a3;--text3:#82796f;
-  --border:#34302c;--border-lt:#2a2724;
+  --bg:#0d1b1a;--bg2:#142322;--bg3:#142322;
+  --text:#e0edec;--text2:#a3bfbd;--text3:#6b8886;
+  --border:#1e3332;--border-lt:#1a2b2a;
   --shadow:0 1px 3px rgba(0,0,0,0.3);--shadow-md:0 4px 16px rgba(0,0,0,0.4);
-  --reading-bg:rgba(196,171,226,0.16);--learning-bg:rgba(141,212,176,0.16);--trauma-bg:rgba(244,181,197,0.16);
-  --reading:#c4abe2;--learning:#8dd4b0;--trauma:#f4b5c5;
-  --overlap-all:#c4abe2;--svg-bg:#2a2620;--svg-filter:brightness(0.88) saturate(0.8)
+  --reading-bg:rgba(42,157,143,0.16);--learning-bg:rgba(69,184,143,0.16);--trauma-bg:rgba(224,122,122,0.16);
+  --reading:#3dbdad;--learning:#45b88f;--trauma:#e07a7a;
+  --overlap-all:#3dbdad;--svg-bg:#142322;--svg-filter:brightness(0.88) saturate(0.8)
 }
 html{font-size:16px;-webkit-font-smoothing:antialiased}
 body{font-family:var(--sans);background:var(--bg);color:var(--text);line-height:1.55;min-height:100vh;transition:background 0.3s,color 0.3s}
 button{font-family:inherit;cursor:pointer;transition:all 0.2s}
 button:active{transform:scale(0.97)}
-::selection{background:rgba(184,160,216,0.28)}
+::selection{background:rgba(42,157,143,0.20)}
 /* Rainbow strip */
-.rainbow-strip{height:5px;width:100%;background:var(--rainbow);position:fixed;top:0;left:0;right:0;z-index:9999;pointer-events:none}
+.rainbow-strip{display:none;width:100%;background:var(--rainbow);position:fixed;top:0;left:0;right:0;z-index:9999;pointer-events:none}
 /* Top bar */
-.top-bar{display:flex;align-items:center;justify-content:space-between;padding:12px 24px;border-bottom:1px solid var(--border-lt);background:var(--bg);position:sticky;top:5px;z-index:500;transition:background 0.3s,border-color 0.3s}
+.top-bar{display:flex;align-items:center;justify-content:space-between;padding:12px 24px;border-bottom:1px solid var(--border-lt);background:var(--bg);position:sticky;top:0;z-index:500;transition:background 0.3s,border-color 0.3s}
 .brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--text)}
 .brand-name{font-family:var(--mono);font-size:10.5px;font-weight:400;letter-spacing:0.07em;text-transform:uppercase;color:var(--text3)}
 .top-bar-right{display:flex;align-items:center;gap:8px}
@@ -59,7 +59,7 @@ button:active{transform:scale(0.97)}
 .back-btn:hover{border-color:var(--text3);color:var(--text)}
 .back-btn.visible{display:inline-flex}
 /* ─── LANDING ─── */
-.landing{position:fixed;inset:0;top:5px;background:var(--bg);z-index:400;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:60px 24px 40px;transition:opacity 0.55s ease,transform 0.55s ease;overflow-y:auto}
+.landing{position:fixed;inset:0;top:0;background:var(--bg);z-index:400;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:60px 24px 40px;transition:opacity 0.55s ease,transform 0.55s ease;overflow-y:auto}
 .landing.fade-out{opacity:0;transform:translateY(-22px);pointer-events:none}
 .landing-badge{font-family:var(--mono);font-size:10px;letter-spacing:0.14em;text-transform:uppercase;color:var(--text3);margin-bottom:18px;text-align:center}
 .landing h1{font-family:var(--serif);font-size:clamp(34px,5.5vw,54px);font-weight:700;letter-spacing:-0.02em;line-height:1.0;text-align:center;color:var(--text);margin-bottom:14px}
@@ -94,7 +94,7 @@ button:active{transform:scale(0.97)}
 .pw-btn[data-on="0"]{opacity:0.36}
 .ctrl-btn{padding:6px 14px;border:1.5px solid var(--border);border-radius:var(--r);background:transparent;font-family:var(--mono);font-size:11px;color:var(--text3);cursor:pointer;transition:all 0.2s}
 .ctrl-btn:hover{border-color:var(--text3);color:var(--text2)}
-.ctrl-btn.active{border-color:var(--overlap-all);color:var(--overlap-all);background:rgba(158,139,191,0.08)}
+.ctrl-btn.active{border-color:var(--overlap-all);color:var(--overlap-all);background:rgba(42,157,143,0.08)}
 .grid{display:grid;grid-template-columns:1fr 340px;gap:16px;align-items:start}
 @media(max-width:900px){.grid{grid-template-columns:1fr}}
 .brain-wrap{position:relative;width:100%;aspect-ratio:520/400;background:var(--svg-bg);border-radius:var(--r-lg);overflow:hidden;border:1px solid var(--border);box-shadow:var(--shadow);transition:background 0.3s,border-color 0.3s}
@@ -108,7 +108,7 @@ button:active{transform:scale(0.97)}
 .badge-reading{background:var(--reading-bg);color:var(--reading)}
 .badge-learning{background:var(--learning-bg);color:var(--learning)}
 .badge-trauma{background:var(--trauma-bg);color:var(--trauma)}
-.badge-overlap{background:rgba(158,139,191,0.12);color:var(--overlap-all);border:1px solid rgba(158,139,191,0.22)}
+.badge-overlap{background:rgba(42,157,143,0.12);color:var(--overlap-all);border:1px solid rgba(42,157,143,0.22)}
 .lbl{font-family:var(--mono);font-size:10px;font-weight:400;letter-spacing:0.08em;text-transform:uppercase;color:var(--text3);margin-bottom:6px}
 .region-search{width:100%;padding:8px 12px;border:1px solid var(--border);border-radius:var(--r);background:var(--bg);color:var(--text);font-family:var(--sans);font-size:13px;margin-bottom:10px;transition:border-color 0.2s,background 0.3s;outline:none}
 .region-search:focus{border-color:var(--overlap-all)}
@@ -267,9 +267,9 @@ button:active{transform:scale(0.97)}
 <defs>
 <filter id="glo"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
 <filter id="sgl"><feGaussianBlur stdDeviation="6"/></filter>
-<marker id="ar" markerWidth="7" markerHeight="6" refX="6" refY="3" orient="auto"><polygon points="0,0 7,3 0,6" fill="#b8a0d8" opacity=".8"/></marker>
-<marker id="al" markerWidth="7" markerHeight="6" refX="6" refY="3" orient="auto"><polygon points="0,0 7,3 0,6" fill="#8dd4b0" opacity=".8"/></marker>
-<marker id="at" markerWidth="7" markerHeight="6" refX="6" refY="3" orient="auto"><polygon points="0,0 7,3 0,6" fill="#f4b5c5" opacity=".8"/></marker>
+<marker id="ar" markerWidth="7" markerHeight="6" refX="6" refY="3" orient="auto"><polygon points="0,0 7,3 0,6" fill="#2a9d8f" opacity=".8"/></marker>
+<marker id="al" markerWidth="7" markerHeight="6" refX="6" refY="3" orient="auto"><polygon points="0,0 7,3 0,6" fill="#45b88f" opacity=".8"/></marker>
+<marker id="at" markerWidth="7" markerHeight="6" refX="6" refY="3" orient="auto"><polygon points="0,0 7,3 0,6" fill="#e07a7a" opacity=".8"/></marker>
 </defs>
 <g id="conns"></g>
 <g id="nodes"></g>
@@ -350,7 +350,7 @@ const LATERAL_B64='data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGl
 
 /* ─── BASE64 IMAGES injected above ─── */
 
-const C={reading:'#b8a0d8',learning:'#8dd4b0',trauma:'#f4b5c5'};
+const C={reading:'#2a9d8f',learning:'#45b88f',trauma:'#e07a7a'};
 const OV={rl:'#9bbfc4',rt:'#d4a4cc',lt:'#b8cca0',all:'#9e8bbf'};
 function rc(pw){if(pw.length===3)return OV.all;if(pw.length===2){const k=pw.slice().sort().join('');if(k==='learningreading')return OV.rl;if(k==='readingtrauma')return OV.rt;if(k==='learningtrauma')return OV.lt}return C[pw[0]]||'#666'}
 function rga(h,a){return'rgba('+parseInt(h.slice(1,3),16)+','+parseInt(h.slice(3,5),16)+','+parseInt(h.slice(5,7),16)+','+a+')'}
@@ -457,7 +457,7 @@ let controlsInited=false;
 function initControls(){
   if(controlsInited)return;controlsInited=true;
   const el=document.getElementById('ctrls');
-  [{k:'reading',c:'#b8a0d8',l:'Reading Brain'},{k:'learning',c:'#8dd4b0',l:'Learning Brain'},{k:'trauma',c:'#f4b5c5',l:'Trauma Brain'}].forEach(b=>{
+  [{k:'reading',c:'#2a9d8f',l:'Reading Brain'},{k:'learning',c:'#45b88f',l:'Learning Brain'},{k:'trauma',c:'#e07a7a',l:'Trauma Brain'}].forEach(b=>{
     const btn=document.createElement('button');btn.className='pw-btn';btn.dataset.pw=b.k;btn.style.borderColor=b.c;
     btn.setAttribute('aria-label','Toggle '+b.l);
     btn.addEventListener('click',()=>{pw[b.k]=!pw[b.k];updateAll()});
@@ -477,7 +477,7 @@ function updateAll(){
     btn.dataset.on=on?'1':'0';
     btn.textContent=(on?'● ':'○ ')+{reading:'Reading',learning:'Learning',trauma:'Trauma'}[k];
     btn.style.background=on?c:'transparent';
-    btn.style.color=on?'#2a2724':c;
+    btn.style.color=on?'#0f1419':c;
     btn.style.borderColor=c;
   });
   const ctb=document.getElementById('ctb');
