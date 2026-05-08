@@ -523,13 +523,22 @@ function drawNodes(){
     const ncx=currentView==='lateral'?r.lcx:r.cx,ncy=currentView==='lateral'?r.lcy:r.cy;
     if(ncx===null||ncy===null)return;
     const isH=hov===r.id,isS=sel===r.id,isO=r.pw.length>1,col=rc(r.pw);
+    const nr=Math.round((r.rx+r.ry)/2);
     let h='';
-    if(isH||isS)h+='<ellipse cx="'+ncx+'" cy="'+ncy+'" rx="'+(r.rx+6)+'" ry="'+(r.ry+6)+'" fill="'+rga(col,.18)+'" filter="url(#sgl)"/>';
-    if(isO)h+='<ellipse cx="'+ncx+'" cy="'+ncy+'" rx="'+(r.rx+3)+'" ry="'+(r.ry+3)+'" fill="none" stroke="rgba(128,128,128,.22)" stroke-width=".8" stroke-dasharray="2.5,2"/>';
-    h+='<ellipse cx="'+ncx+'" cy="'+ncy+'" rx="'+r.rx+'" ry="'+r.ry+'" fill="'+rga(col,isH||isS?.58:.35)+'" stroke="'+col+'" stroke-width="'+(isH||isS?2.5:1.5)+'"'+(currentView==='lateral'&&r.id==='ins'?' stroke-dasharray="3,2"':'')+(isH?' filter="url(#glo)"':'')+'/>';
-    if(isO)r.pw.filter(p=>pw[p]).forEach((p,i)=>{const a=(i/r.pw.length)*360-90,d=Math.max(r.rx,r.ry)+6;h+='<circle cx="'+(ncx+d*Math.cos(a*Math.PI/180))+'" cy="'+(ncy+d*Math.sin(a*Math.PI/180))+'" r="3" fill="'+C[p]+'" stroke="var(--bg)" stroke-width=".7"/>'});
-    const ln=r.short.length>16?r.short.split(/[\s\/]+/).map((w,i)=>'<tspan x="'+ncx+'" dy="'+(i===0?-5:8)+'">'+esc(w)+'</tspan>').join(''):esc(r.short);
-    h+='<text x="'+ncx+'" y="'+(ncy+1)+'" text-anchor="middle" dominant-baseline="middle" fill="var(--text)" font-size="6.5" font-family="var(--sans)" font-weight="600" pointer-events="none" stroke="var(--bg)" stroke-width=".3" paint-order="stroke">'+ln+'</text>';
+    // Glow halo on hover/select
+    if(isH||isS)h+='<circle cx="'+ncx+'" cy="'+ncy+'" r="'+(nr+7)+'" fill="'+rga(col,.18)+'" filter="url(#sgl)"/>';
+    // Dashed overlap ring — pathway-colored
+    if(isO)h+='<circle cx="'+ncx+'" cy="'+ncy+'" r="'+(nr+4)+'" fill="none" stroke="'+col+'" stroke-width="1.2" stroke-dasharray="3,2.5" opacity=".6"'+(currentView==='lateral'&&r.id==='ins'?' stroke-dasharray="3,2"':'')+'/>';
+    // Main node circle — solid fill
+    h+='<circle cx="'+ncx+'" cy="'+ncy+'" r="'+nr+'" fill="'+col+'" fill-opacity="'+(isH||isS?.95:.78)+'" stroke="rgba(255,255,255,.35)" stroke-width="'+(isH||isS?2:1.2)+'"'+(isH?' filter="url(#glo)"':'')+'/>';
+    // Label above the circle
+    const words=r.short.split(/[\s\/]+/);
+    const ly=ncy-nr-3;
+    if(words.length>1){const mid=Math.ceil(words.length/2);const l1=words.slice(0,mid).join(' '),l2=words.slice(mid).join(' ');
+      h+='<text x="'+ncx+'" y="'+ly+'" text-anchor="middle" fill="var(--text)" font-size="6" font-family="var(--sans)" font-weight="700" pointer-events="none" stroke="var(--bg)" stroke-width=".5" paint-order="stroke"><tspan x="'+ncx+'" dy="0">'+esc(l1)+'</tspan><tspan x="'+ncx+'" dy="7">'+esc(l2)+'</tspan></text>';
+    }else{
+      h+='<text x="'+ncx+'" y="'+ly+'" text-anchor="middle" fill="var(--text)" font-size="6" font-family="var(--sans)" font-weight="700" pointer-events="none" stroke="var(--bg)" stroke-width=".5" paint-order="stroke">'+esc(r.short)+'</text>';
+    }
     const gr=document.createElementNS('http://www.w3.org/2000/svg','g');
     gr.className.baseVal='rn';gr.setAttribute('tabindex','0');gr.setAttribute('role','button');gr.setAttribute('aria-label',r.name);
     gr.innerHTML=h;
