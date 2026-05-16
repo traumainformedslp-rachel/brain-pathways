@@ -3,9 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Brain Pathways | RTN Communication &amp; Literacy</title>
+<title>Brain Pathways | RTN | Speech, Language &amp; Literacy</title>
 <meta name="description" content="Interactive evidence-based brain diagram showing overlapping neural networks of the reading, learning, and trauma brain.">
-<meta name="author" content="Rachel Terra Norton / RTN Communication &amp; Literacy">
+<meta name="author" content="Rachel Terra Norton / RTN | Speech, Language &amp; Literacy">
 <link rel="license" href="https://creativecommons.org/licenses/by-nc/4.0/">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -27,7 +27,7 @@
   --learning:#E2B93B;--learning-bg:rgba(226,185,59,0.14);  /* yellow — cognition */
   --trauma:#D64545;--trauma-bg:rgba(214,69,69,0.14);       /* red — stress */
   --overlap-all:#7A6FAD;                                   /* muted purple — all three */
-  --rainbow:#3B7DD8;
+  --rainbow:linear-gradient(90deg,#002051,#0a326a,#2b446e,#4d566d,#6b6b6f,#8a8678,#a9a373,#cac26d,#fdea45);
   --shadow:0 1px 4px rgba(59,125,216,0.08),0 2px 8px rgba(59,125,216,0.04);
   --shadow-md:0 4px 12px rgba(59,125,216,0.10),0 8px 24px rgba(59,125,216,0.06);
   --svg-bg:#ffffff;--svg-filter:brightness(1.02) saturate(0.85)
@@ -47,7 +47,7 @@ button{font-family:inherit;cursor:pointer;transition:all 0.2s}
 button:active{transform:scale(0.97)}
 ::selection{background:rgba(59,125,216,0.20)}
 /* Rainbow strip */
-.rainbow-strip{display:none;width:100%;background:var(--rainbow);position:fixed;top:0;left:0;right:0;z-index:9999;pointer-events:none}
+.rainbow-strip{height:6px;width:100%;background:var(--rainbow);position:fixed;top:0;left:0;right:0;z-index:9999;pointer-events:none}
 /* Top bar */
 .top-bar{display:flex;align-items:center;justify-content:space-between;padding:12px 24px;border-bottom:1px solid var(--border-lt);background:var(--bg);position:sticky;top:0;z-index:500;transition:background 0.3s,border-color 0.3s}
 .brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--text)}
@@ -214,7 +214,7 @@ button:active{transform:scale(0.97)}
 <!-- Top Bar -->
 <div class="top-bar">
 <a href="https://www.rachelslp.org" class="brand" target="_top">
-<span class="brand-name">RTN Communication &amp; Literacy</span>
+<span class="brand-name">RTN | Speech, Language &amp; Literacy</span>
 </a>
 <div class="top-bar-right">
 <button class="back-btn" id="backBtn" onclick="showLanding()">&#8592; Networks</button>
@@ -224,7 +224,7 @@ button:active{transform:scale(0.97)}
 
 <!-- Landing Section -->
 <section class="landing" id="landing">
-<div class="landing-badge">RTN Communication &amp; Literacy</div>
+<div class="landing-badge">RTN | Speech, Language &amp; Literacy</div>
 <h1>Brain Pathways</h1>
 <p class="landing-sub">Explore overlapping neural networks of literacy, learning, and trauma &mdash; and why they matter for intervention.</p>
 <div class="network-cards">
@@ -267,8 +267,8 @@ button:active{transform:scale(0.97)}
 <defs>
 <filter id="glo"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
 <filter id="sgl"><feGaussianBlur stdDeviation="6"/></filter>
-<marker id="ar" markerWidth="7" markerHeight="6" refX="6" refY="3" orient="auto"><polygon points="0,0 7,3 0,6" fill="#2a9d8f" opacity=".8"/></marker>
-<marker id="al" markerWidth="7" markerHeight="6" refX="6" refY="3" orient="auto"><polygon points="0,0 7,3 0,6" fill="#45b88f" opacity=".8"/></marker>
+<marker id="ar" markerWidth="7" markerHeight="6" refX="6" refY="3" orient="auto"><polygon points="0,0 7,3 0,6" fill="#2b446e" opacity=".8"/></marker>
+<marker id="al" markerWidth="7" markerHeight="6" refX="6" refY="3" orient="auto"><polygon points="0,0 7,3 0,6" fill="#a9a373" opacity=".8"/></marker>
 <marker id="at" markerWidth="7" markerHeight="6" refX="6" refY="3" orient="auto"><polygon points="0,0 7,3 0,6" fill="#e07a7a" opacity=".8"/></marker>
 </defs>
 <g id="conns"></g>
@@ -339,7 +339,7 @@ button:active{transform:scale(0.97)}
 </ul></div>
 </div>
 <div class="ftr">
-<p>&copy; 2025 Rachel Terra Norton &middot; RTN Communication &amp; Literacy</p>
+<p>&copy; 2025 Rachel Terra Norton &middot; RTN | Speech, Language &amp; Literacy</p>
 <p><a href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a> &nbsp;&bull;&nbsp; <a href="https://www.rachelslp.org" target="_top">rachelslp.org</a></p>
 </div>
 </div>
@@ -459,7 +459,7 @@ let controlsInited=false;
 function initControls(){
   if(controlsInited)return;controlsInited=true;
   const el=document.getElementById('ctrls');
-  [{k:'reading',c:'#2a9d8f',l:'Reading Brain'},{k:'learning',c:'#45b88f',l:'Learning Brain'},{k:'trauma',c:'#e07a7a',l:'Trauma Brain'}].forEach(b=>{
+  [{k:'reading',c:'#2b446e',l:'Reading Brain'},{k:'learning',c:'#a9a373',l:'Learning Brain'},{k:'trauma',c:'#e07a7a',l:'Trauma Brain'}].forEach(b=>{
     const btn=document.createElement('button');btn.className='pw-btn';btn.dataset.pw=b.k;btn.style.borderColor=b.c;
     btn.setAttribute('aria-label','Toggle '+b.l);
     btn.addEventListener('click',()=>{pw[b.k]=!pw[b.k];updateAll()});
